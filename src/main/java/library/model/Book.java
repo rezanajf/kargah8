@@ -1,4 +1,49 @@
 package main.java.library.model;
 
 public class Book {
+    private static int nextId = 1;
+    private int id;
+    private String title;
+    private String textFilePath;
+    private String author;
+    private String publisher;
+    private int publicationYear;
+
+    public Book(String title, String textFilePath, String author, String publisher, int publicationYear) {
+        this.id = nextId;
+        nextId++;
+        this.title = title;
+        this.textFilePath = textFilePath;
+        this.author = author;
+        this.publisher = publisher;
+        this.publicationYear = publicationYear;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getTextFilePath() {
+        return textFilePath;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public String toString() {
+        return "[" + id + "]" + title +  " | "  + author + " | " + publisher + " | " + publicationYear;
+    }
 }
