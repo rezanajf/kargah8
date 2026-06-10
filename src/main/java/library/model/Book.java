@@ -46,4 +46,25 @@ public class Book {
     public String toString() {
         return "[" + id + "]" + title +  " | "  + author + " | " + publisher + " | " + publicationYear;
     }
+    //setters
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setTextFilePath(String textFilePath) {
+        this.textFilePath = textFilePath;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setPublicationYear(int publicationYear) {
+        this.publicationYear = publicationYear;
+    }
 }
