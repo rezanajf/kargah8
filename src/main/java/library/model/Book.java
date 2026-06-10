@@ -43,9 +43,6 @@ public class Book {
         return publicationYear;
     }
 
-    public String toString() {
-        return "[" + id + "]" + title +  " | "  + author + " | " + publisher + " | " + publicationYear;
-    }
     //setters
 
     public void setTitle(String title) {
@@ -66,5 +63,10 @@ public class Book {
 
     public void setPublicationYear(int publicationYear) {
         this.publicationYear = publicationYear;
+    }
+
+
+    public String toString() {
+        return "[" + id + "]" + title +  " | "  + author + " | " + publisher + " | " + publicationYear;
     }
 }
