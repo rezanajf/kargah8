@@ -1,9 +1,8 @@
 package main.java.library.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FileManager {
 
@@ -17,7 +16,7 @@ public class FileManager {
         File file = new File(filePath);
 
         if (!file.exists()) {
-        return 0;
+            return 0;
         }
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -32,7 +31,26 @@ public class FileManager {
             System.out.println("خطا در خواندن فایل" + e.getMessage());
             return 0;
         }
+    }
 
+    public static void writeBookText(String filePath, String content) throws IOException {
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
+            writer.write(content);
+        }
+    }
+
+    public static String readFullText(String filePath) {
+
+        if(filePath == null || filePath.trim().isEmpty()) {
+        return "";
+        }
+
+        try {
+            return Files.readString(Paths.get(filePath));
+        }
+        catch (IOException e) {
+            return "";
+        }
     }
 }
