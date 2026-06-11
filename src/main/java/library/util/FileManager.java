@@ -28,7 +28,8 @@ public class FileManager {
             return countLine;
 
         } catch (IOException e) {
-            System.out.println("خطا در خواندن فایل" + e.getMessage());
+            e.printStackTrace();
+            System.err.println("Error. Unable to read file: " + e.getMessage());
             return 0;
         }
     }
@@ -50,6 +51,7 @@ public class FileManager {
             return Files.readString(Paths.get(filePath));
         }
         catch (IOException e) {
+            e.printStackTrace();
             return "";
         }
     }
