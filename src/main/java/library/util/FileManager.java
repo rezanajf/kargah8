@@ -2,6 +2,8 @@ package main.java.library.util;
 
 import main.java.library.model.Book;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,5 +87,48 @@ public class FileManager {
             e.printStackTrace();
         }
         return pages;
+    }
+
+    public static int countLines(String filePath) {
+        int countLine = 0;
+        File file = new File(filePath);
+
+        if (!file.exists()) {
+            return 0;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            while ((reader.readLine()) != null) {
+                countLine++;
+            }
+            return countLine;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error. Unable to read file: " + e.getMessage());
+            return 0;
+        }
+    }
+
+    public static void writeBookText(String filePath, String content) throws IOException {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
+            writer.write(content);
+        }
+    }
+
+    public static String readFullText(String filePath) {
+
+        if(filePath == null || filePath.trim().isEmpty()) {
+            return "";
+        }
+
+        try {
+            return Files.readString(Paths.get(filePath));
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }
