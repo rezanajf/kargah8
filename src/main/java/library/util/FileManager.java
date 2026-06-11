@@ -26,11 +26,32 @@ public class FileManager {
                 Book book = new Book(title, textFilePath, author, publisher, publicationYear);
                 books.add(book);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return books;
     }
 
+    public static void saveBooksToCSV(List<Book> books) {
+        File file = new File(BOOK_LIST_CSV);
+        //check if the directory exist
+        File parentDir = file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write("Title,Author,Publisher,Publication Year,Path");
+            writer.newLine();
+
+            for (Book book : books){
+                String line = book.getTitle() + "," + book.getAuthor() + "," + book.getPublisher() + "," + book.getPublicationYear() + "," + book.getTextFilePath();
+                writer.write(line);
+                writer.newLine();
+            }
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
