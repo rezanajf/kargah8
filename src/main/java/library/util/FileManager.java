@@ -54,4 +54,36 @@ public class FileManager {
             e.printStackTrace();
         }
     }
+
+    public static List<String> readBookPages(String filePath, int linesPerPage){
+        List<String> pages = new ArrayList<>();
+        String currentPage = "";
+        int lineCount = 0;
+        File file = new File(BOOKS_TEXT_DIR + filePath);
+
+        if (!file.exists()) {
+            pages.add("This file does not exist.");
+            return pages;
+        }
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                currentPage += line + "\n";
+                lineCount++;
+
+                if (lineCount >= linesPerPage) {
+                    pages.add(currentPage);
+                    currentPage = "";
+                    lineCount = 0;
+                }
+            }
+            if (currentPage.length() > 0)
+                pages.add(currentPage);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return pages;
+    }
 }
