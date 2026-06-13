@@ -24,4 +24,14 @@ public class LibraryService {
         }
         return Optional.empty();
     }
+
+    public String readFullText(int bookId) {
+        Optional<Book> optionalBook = findBookById(bookId);
+
+        if(optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+            return FileManager.readFullText(book.getTextFilePath());
+        }
+        return "";
+    }
 }
