@@ -54,4 +54,9 @@ public class LibraryService {
         saveBooks();
         return true;
     }
+
+    public List<String> getBookPages(Book book, int linesPerPage){
+        String filePath = book.getTextFilePath();
+        return FileManager.readBookPages(filePath, linesPerPage);
+    }
 }
