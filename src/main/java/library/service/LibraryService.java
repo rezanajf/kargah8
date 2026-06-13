@@ -47,4 +47,7 @@ public class LibraryService {
         return false;
     }
 
+    public int countLines(Book book) {
+        return FileManager.countLines(book.getTextFilePath());
+    }
 }
