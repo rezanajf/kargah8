@@ -34,4 +34,17 @@ public class LibraryService {
         }
         return "";
     }
+
+    public boolean editBookContent(int bookId, String newContent) throws IOException {
+        Optional<Book> optionalBook = findBookById(bookId);
+
+        if(optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+            FileManager.writeBookText(book.getTextFilePath(), newContent);
+            return true;
+        }
+
+        return false;
+    }
+
 }
