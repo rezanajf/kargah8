@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainFrame extends JFrame {
@@ -22,6 +21,7 @@ public class MainFrame extends JFrame {
     private JTextArea pageArea;
     private List<String> pages;
     private int currentPage;
+    private static final int linesInPage = 20;
 
 
     public MainFrame(){
@@ -206,5 +206,109 @@ public class MainFrame extends JFrame {
     }
 
 
-    public void openBook(boolean editable){}
+    public void openBook(boolean editable) {
+
+        if (menuPanel != null) {
+            remove(menuPanel);
+        }
+
+        if (readerPanel != null) {
+            remove(readerPanel);
+        }
+
+        if (selectedBook == null) {
+            JOptionPane.showMessageDialog(MainFrame.this, "No books selected, Please select a book");
+            return;
+        }
+
+        readerPanel = new JPanel();
+        readerPanel.setLayout(new BoxLayout(readerPanel, BoxLayout.Y_AXIS));
+
+        pages = service.getBookPages(selectedBook, linesInPage);
+        currentPage = 0;
+
+        pageArea = new JTextArea();
+        pageArea.setLineWrap(true);
+        pageArea.setWrapStyleWord(true);
+        pageArea.setEditable(editable);
+
+        if (pages != null) {
+            pageArea.setText(pages.get(0));
+        }
+
+        JScrollPane scrollPane = new JScrollPane(pageArea);
+        readerPanel.add(scrollPane);
+
+        if (editable) {
+            JButton applyButton = new JButton("Apply changes");
+            applyButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    try {
+                        String content = pageArea.getText();
+                        boolean success = service.editBookContent(selectedBook.getId(), content);
+
+                        if (success) {
+                            JOptionPane.showMessageDialog(MainFrame.this, "Saved changes successfully.");
+                            pages = service.getBookPages(selectedBook, linesInPage);
+                        } else {
+                            JOptionPane.showMessageDialog(MainFrame.this, "Unable to save changes.");
+                        }
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(MainFrame.this, "Error" + ex.getMessage());
+                    }
+                }
+            });
+
+            readerPanel.add(applyButton);
+            readerPanel.add(Box.createVerticalStrut(15));
+        }
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new FlowLayout());
+
+        JButton previousButton = new JButton("<");
+        previousButton.setPreferredSize(new Dimension(180, 35));
+        previousButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        previousButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (currentPage <= 0) {
+                    JOptionPane.showMessageDialog(MainFrame.this, "You are on the first page. ");
+                }
+
+                else {
+                    currentPage--;
+                    pageArea.setText(pages.get(currentPage));
+                }
+            }
+        });
+
+        JButton nextButton = new JButton(">");
+        nextButton.setPreferredSize(new Dimension(180, 35));
+        nextButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (currentPage + 1 >= pages.size()) {
+                    JOptionPane.showMessageDialog(MainFrame.this, "You are on the last page. ");
+                }
+
+                else {
+                    currentPage ++;
+                    pageArea.setText(pages.get(currentPage));
+                }
+            }
+        });
+        buttonsPanel.add(previousButton);
+        buttonsPanel.add(nextButton);
+        readerPanel.add(buttonsPanel);
+
+        add(readerPanel, BorderLayout.CENTER);
+        revalidate();
+        repaint();
+    }
 }
