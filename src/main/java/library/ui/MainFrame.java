@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
     private JTextArea pageArea;
     private List<String> pages;
     private int currentPage;
-    private static final int linesInPage = 20;
+    private static final int linesInPage = 2;
 
 
     public MainFrame(){
