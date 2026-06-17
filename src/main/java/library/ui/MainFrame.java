@@ -40,8 +40,11 @@ public class MainFrame extends JFrame {
         booksPanel = new JPanel();
         booksPanel.setLayout(new BoxLayout(booksPanel,BoxLayout.Y_AXIS));
 
+        booksPanel.add(Box.createVerticalStrut(200));
+
         for (Book book : books) {
             JButton bookButton = new JButton(book.getTitle());
+            bookButton.setMaximumSize(new Dimension(210,40));
             bookButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             bookButton.addActionListener(new ActionListener() {
                 @Override
@@ -51,8 +54,10 @@ public class MainFrame extends JFrame {
                 }
             });
             booksPanel.add(bookButton);
+            booksPanel.add(Box.createVerticalStrut(15));
         }
         JButton refreshButton = new JButton("REFRESH");
+        refreshButton.setMaximumSize(new Dimension(210,40));
         refreshButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         refreshButton.addActionListener(new ActionListener() {
             @Override
@@ -65,6 +70,18 @@ public class MainFrame extends JFrame {
             }
         });
         booksPanel.add(refreshButton);
+        booksPanel.add(Box.createVerticalStrut(15));
+        //exit bitton
+        JButton exitButton = new JButton("Exit");
+        exitButton.setMaximumSize(new Dimension(210,40));
+        exitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        booksPanel.add(exitButton);
     }
 
     public void showBookMenu(){
