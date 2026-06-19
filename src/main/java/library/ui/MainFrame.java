@@ -263,12 +263,27 @@ public class MainFrame extends JFrame {
                 public void actionPerformed(ActionEvent e) {
 
                     try {
-                        String content = pageArea.getText();
+                        String currentPageText = pageArea.getText();
+
+                        if (pages != null && currentPage >= 0 && currentPage < pages.size()) {
+                            pages.set(currentPage, currentPageText);
+                        }
+
+                        String content = "";
+                        if (pages != null && !pages.isEmpty()) {
+                            for (String page : pages) {
+                                content += page;
+                            }
+                        }
                         boolean success = service.editBookContent(selectedBook.getId(), content);
 
                         if (success) {
                             JOptionPane.showMessageDialog(MainFrame.this, "Saved changes successfully.");
-                            pages = service.getBookPages(selectedBook, linesInPage);
+                            if (pages != null && !pages.isEmpty()) {
+                                if (currentPage >= pages.size())
+                                    currentPage = pages.size() - 1;
+                                pageArea.setText(pages.get(currentPage));
+                            }
                         } else {
                             JOptionPane.showMessageDialog(MainFrame.this, "Unable to save changes.");
                         }

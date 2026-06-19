@@ -114,7 +114,7 @@ public class FileManager {
 
     public static void writeBookText(String filePath, String content) throws IOException {
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, false))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(BOOKS_TEXT_DIR+filePath, false))) {
             writer.write(content);
         }
     }
