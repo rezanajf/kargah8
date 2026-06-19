@@ -99,7 +99,7 @@ public class FileManager {
             return 0;
         }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             while ((reader.readLine()) != null) {
                 countLine++;
             }
