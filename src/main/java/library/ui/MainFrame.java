@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
     private JTextArea pageArea;
     private List<String> pages;
     private int currentPage;
-    private static final int linesInPage = 20;
+    private static final int linesInPage = 2;
 
 
     public MainFrame(){
@@ -320,8 +320,24 @@ public class MainFrame extends JFrame {
                 }
             }
         });
+
+        JButton backButton = new JButton("back");
+        backButton.setPreferredSize(new Dimension(180, 35));
+        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                remove(readerPanel);
+                createBooksPanel();
+                add(booksPanel, BorderLayout.CENTER);
+                revalidate();
+                repaint();
+            }
+        });
+
         buttonsPanel.add(previousButton);
         buttonsPanel.add(nextButton);
+        buttonsPanel.add(backButton);
         readerPanel.add(buttonsPanel);
 
         add(readerPanel, BorderLayout.CENTER);

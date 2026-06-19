@@ -91,7 +91,9 @@ public class FileManager {
 
     public static int countLines(String filePath) {
         int countLine = 0;
-        File file = new File(filePath);
+
+        String path = BOOKS_TEXT_DIR + filePath;
+        File file = new File(path);
 
         if (!file.exists()) {
             return 0;
